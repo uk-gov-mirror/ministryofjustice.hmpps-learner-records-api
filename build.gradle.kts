@@ -13,12 +13,15 @@ ext["jackson-bom.version"] = "3.1.5"
 ext["log4j2.version"] = "2.25.5"
 ext["tomcat.version"] = "11.0.24"
 ext["httpcore5.version"] = "5.4.3"
+ext["netty.version"] = "4.2.16.Final"
 
 dependencies {
   implementation("uk.gov.justice.service.hmpps:hmpps-kotlin-spring-boot-starter:2.5.0")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
   implementation("org.springframework.boot:spring-boot-starter-flyway")
-  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3")
+  implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3") {
+    implementation("org.webjars:swagger-ui:5.32.11")
+  }
   implementation("com.squareup.retrofit2:retrofit:2.12.0")
   implementation("com.squareup.retrofit2:converter-jaxb:2.12.0")
   implementation("com.google.code.gson:gson")
