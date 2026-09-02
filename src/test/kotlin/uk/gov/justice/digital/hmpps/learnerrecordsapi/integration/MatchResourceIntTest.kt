@@ -73,7 +73,7 @@ class MatchResourceIntTest : IntegrationTestBase() {
   protected val auditSqsClient by lazy { auditQueue.sqsClient }
   protected val auditQueueUrl by lazy { auditQueue.queueUrl }
 
-  val nomisId = "A1234BC"
+  val nomisId = "1234567"
   val matchedUln = "A"
   val givenName = "Test"
   val familyName = "Tester"
@@ -184,7 +184,7 @@ class MatchResourceIntTest : IntegrationTestBase() {
 
   @Test
   fun `POST to confirm match should return 201 CREATED with a response confirming a match`() {
-    val (nomisId, uln) = arrayOf("A1417AE", "1234567890")
+    val (nomisId, uln) = arrayOf("1234567", "1234567890")
     val actualResponse = postMatch(nomisId, uln, 201)
     verify(matchService, times(1)).isUnmatched(any(), any())
     verify(matchService, times(1)).saveMatch(any(), any())
@@ -194,10 +194,10 @@ class MatchResourceIntTest : IntegrationTestBase() {
 
   @Test
   fun `POST to confirm match should return 409 CONFLICT if ULN already used`() {
-    val (nomisId, uln) = arrayOf("A1417AE", "1234567890")
+    val (nomisId, uln) = arrayOf("1234567", "1234567890")
     matchRepository.save(
       MatchEntity(
-        nomisId = "B1234CD",
+        nomisId = "7654321",
         matchedUln = uln,
       ),
     )
@@ -208,7 +208,7 @@ class MatchResourceIntTest : IntegrationTestBase() {
 
   @Test
   fun `POST to confirm match should return 400 if ULN is malformed`() {
-    val (nomisId, uln) = arrayOf("A1417AE", "1234567890abcdef")
+    val (nomisId, uln) = arrayOf("1234567", "1234567890abcdef")
     val actualResponse = jsonMapper.readValue(
       postMatch(nomisId, uln, 400).expectBody().returnResult().responseBody,
       HmppsBoldLrsExceptionHandler.ErrorResponse::class.java,
@@ -228,7 +228,7 @@ class MatchResourceIntTest : IntegrationTestBase() {
 
   @Test
   fun `POST to confirm match should return 500 if match service fails to save`() {
-    val (nomisId, uln) = arrayOf("A1417AE", "1234567890")
+    val (nomisId, uln) = arrayOf("1234567", "1234567890")
     doThrow(RuntimeException("Database error")).`when`(matchService).saveMatch(any(), any())
     val actualResponse = jsonMapper.readValue(
       postMatch(nomisId, uln, 500).expectBody().returnResult().responseBody,
@@ -469,7 +469,7 @@ class MatchResourceIntTest : IntegrationTestBase() {
 
   @Test
   fun `POST to confirm un-match should return 201 CREATED with a response confirming a match`() {
-    val nomisId = "A1417AE"
+    val nomisId = "1234567"
     val actualResponse = postUnmatch(nomisId, 201)
     verify(matchService, times(1)).unMatch(any())
     actualResponse.expectStatus().isCreated

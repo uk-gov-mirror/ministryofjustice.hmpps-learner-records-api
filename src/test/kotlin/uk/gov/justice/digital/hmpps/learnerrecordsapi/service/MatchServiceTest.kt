@@ -248,16 +248,19 @@ class MatchServiceTest {
         nomisId = id1,
         matchedUln = uln1,
         dateCreated = LocalDateTime.now(),
+        id = 1,
       ),
       MatchEntity(
         nomisId = id1,
         matchedUln = "",
         dateCreated = LocalDateTime.now().plusSeconds(1),
+        id = 2,
       ),
       MatchEntity(
         nomisId = id2,
         matchedUln = uln2,
         dateCreated = LocalDateTime.now(),
+        id = 3,
       ),
     )
     return MatchService(MockMatchRepository(entities))

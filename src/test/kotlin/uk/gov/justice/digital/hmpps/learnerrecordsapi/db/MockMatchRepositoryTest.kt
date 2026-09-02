@@ -11,18 +11,21 @@ class MockMatchRepositoryTest {
     nomisId = "A",
     matchedUln = "1",
     dateCreated = LocalDateTime.now(),
+    id = 1,
   )
 
   private val e2 = MatchEntity(
     nomisId = "A",
     matchedUln = "",
     dateCreated = LocalDateTime.now().plusSeconds(1),
+    id = 2,
   )
 
   private val e3 = MatchEntity(
     nomisId = "B",
     matchedUln = "2",
     dateCreated = LocalDateTime.now(),
+    id = 3,
   )
 
   private val repository = MockMatchRepository(listOf(e1, e2, e3))

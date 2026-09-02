@@ -37,4 +37,24 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
   fun findAllNomisIdsExcept(
     @Param("nomisId") nomisId: String,
   ): Set<String>
+
+  @Query(
+    """
+        SELECT
+            CASE WHEN EXISTS
+                (
+                    SELECT m FROM MatchEntity m
+                    WHERE m.nomisId <> :nomisId AND m.matchedUln = :uln
+                    AND m.id = (
+                        SELECT MAX(m2.id)
+                        FROM MatchEntity m2
+                        WHERE m2.nomisId = m.nomisId
+                    )
+                )
+            THEN TRUE
+            ELSE FALSE
+            END
+      """,
+  )
+  fun existsMatchWithDifferentId(@Param("nomisId") nomisId: String, @Param("uln") uln: String): Boolean
 }

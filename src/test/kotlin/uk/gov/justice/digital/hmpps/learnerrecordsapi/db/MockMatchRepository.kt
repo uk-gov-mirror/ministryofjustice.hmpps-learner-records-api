@@ -15,12 +15,22 @@ class MockMatchRepository(val entities: List<MatchEntity>) : MatchRepository {
 
   override fun findFirstByNomisIdOrderByIdDesc(nomisId: String): MatchEntity? = entities
     .filter { it.nomisId == nomisId }
-    .maxBy { it.dateCreated!! }
+    .maxByOrNull { it.id!! }
 
   override fun findAllNomisIdsExcept(nomisId: String): Set<String> = entities
     .map { it.nomisId }
     .filter { it != nomisId }
     .toSet()
+
+  override fun existsMatchWithDifferentId(nomisId: String, uln: String): Boolean = entities
+    .map { it.nomisId }
+    .filter { it != nomisId }
+    .any { otherNomisId ->
+      entities
+        .filter { it.nomisId == otherNomisId }
+        .maxByOrNull { it.id!! }
+        ?.matchedUln == uln
+    }
 
   override fun findForSubjectAccessRequest(
     nomisId: String,
