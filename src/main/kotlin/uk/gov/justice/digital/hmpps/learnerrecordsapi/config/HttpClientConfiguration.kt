@@ -28,7 +28,7 @@ class HttpClientConfiguration(private val lrsConfiguration: LRSConfiguration) {
   fun sslHttpClient(): OkHttpClient {
     logger.log("Building HTTP client with SSL")
     val loggingInterceptor = HttpLoggingInterceptor()
-    loggingInterceptor.level = Level.BODY
+    loggingInterceptor.level = Level.BASIC
 
     val sslContextConfiguration = SSLContextConfiguration(lrsConfiguration.pfxPath)
     val sslContext = sslContextConfiguration.createSSLContext()
