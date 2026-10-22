@@ -1,6 +1,6 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "11.0.10"
-  kotlin("plugin.spring") version "2.4.20"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "11.0.12"
+  kotlin("plugin.spring") version "2.4.21"
 }
 
 configurations {
@@ -18,7 +18,7 @@ dependencies {
   implementation("com.squareup.okhttp3:okhttp")
   implementation("javax.xml.bind:jaxb-api:2.3.1")
   implementation("org.glassfish.jaxb:jaxb-runtime:2.3.9")
-  implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+  implementation("com.squareup.okhttp3:logging-interceptor:4.12.1")
   implementation("uk.gov.justice.service.hmpps:hmpps-sqs-spring-boot-starter:7.4.1")
 
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -36,7 +36,7 @@ dependencies {
   testImplementation("org.testcontainers:testcontainers-localstack")
   testImplementation("org.awaitility:awaitility-kotlin")
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-  testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+  testImplementation("com.squareup.okhttp3:mockwebserver:4.12.1")
 }
 
 kotlin {
